@@ -1,80 +1,117 @@
-# 🐚 Módulo 00: Entorno de Trabajo, Consola Unix &amp; Versionado con Git
+# 🐚 Módulo 00: La Terminal y Git desde CERO Absoluto
 
-&gt; *Las herramientas fundamentales del Data Engineer: navegar el sistema operativo desde la terminal y gestionar el historial de código con Git.*
-
----
-
-## 📌 1\. ¿Por qué la consola es el hábitat del Data Engineer?
-
-En el mundo del desarrollo y la analítica tradicional, muchas tareas se hacen haciendo clic en interfaces gráficas. Sin embargo, en la **Ingeniería de Datos**, la mayoría de las herramientas (servidores Cloud, contenedores Docker, pipelines de Airflow y clústeres de Spark) **no tienen interfaz gráfica**: se gestionan 100% mediante la línea de comandos (CLI).
-
-Dominar la terminal te da velocidad, control total sobre el sistema operativo y la capacidad de automatizar scripts.
+&gt; *Perdele el miedo a la pantalla negra: aprendé a moverte por tu computadora usando comandos y a guardar el historial de tu código con Git.*
 
 ---
 
-## 💻 2\. Los 10 Comandos Esenciales de Unix/Linux
+## 📌 ¿Qué es la Terminal y por qué no hay que tenerle miedo?
 
-Abrí tu terminal (Bash, Zsh o WSL en Windows) y practicá estos comandos:
+Cuando usás tu computadora normalmente, usás una **Interfaz Gráfica (GUI)**: hacés doble clic en carpetas, arrastrás archivos con el mouse y los abrís con un botón.
 
-| Comando | Descripción                                                                   | Ejemplo de Uso                       |
-| ------- | ----------------------------------------------------------------------------- | ------------------------------------ |
-| `pwd`   | Muestra la ruta de la carpeta donde estás parado (*Print Working Directory*). | `pwd`                                |
-| `ls`    | Lista los archivos y carpetas del directorio actual.                          | `ls -la`                             |
-| `cd`    | Cambia de carpeta (*Change Directory*).                                       | `cd modulo-00-entorno-y-git`         |
-| `mkdir` | Crea una nueva carpeta.                                                       | `mkdir mis_scripts`                  |
-| `touch` | Crea un archivo vacío.                                                        | `touch script.py`                    |
-| `rm`    | Elimina un archivo o carpeta.                                                 | `rm archivo.txt`                     |
-| `cat`   | Muestra el contenido de un archivo en la consola.                             | `cat README.md`                      |
-| `grep`  | Busca un texto específico dentro de un archivo.                               | `grep "ERROR" pipeline.log`          |
-| `cp`    | Copia archivos o carpetas.                                                    | `cp config.py config_backup.py`      |
-| `mv`    | Mueve o renombra archivos/carpetas.                                           | `mv viejo_nombre.py nuevo_nombre.py` |
+La **Terminal (o Línea de Comandos / CLI)** es simplemente otra forma de comunicarte con tu computadora, pero **escribiendo texto**.
+
+### ¿Por qué los Ingenieros de Datos usan la terminal?
+
+1. **Es más rápida**: Podés crear 50 carpetas o buscar un texto en mil archivos en un segundo.
+2. **Los servidores no tienen pantalla**: Cuando tu código corre en la nube (AWS, Google Cloud, Docker), no hay mouse ni ventanas. Todo se maneja por consola.
 
 ---
 
-## 🌿 3\. Control de Versiones con Git y GitHub
+## 🐣 Lección 0.1: Los Comandos Básicos (Paso a Paso)
 
-### ¿Qué es Git?
+Abrí tu terminal (Git Bash en Windows, Terminal en Mac/Linux) y probá estos comandos uno por uno:
 
-Git es un sistema de control de versiones local que registra los cambios realizados en tus archivos a lo largo del tiempo. Te permite volver a versiones anteriores, trabajar en ramas paralelas (*branches*) y colaborar sin pisar el trabajo de otros.
+### 1\. ¿Dónde estoy parado? (`pwd`)
 
-### ¿Qué es GitHub?
+Escribí `pwd` y presioná Enter.
 
-GitHub es una plataforma en la nube que aloja repositorios de Git remotos, permitiendo compartir código, automatizar pruebas y colaborar en equipo.
+* Significa: *Print Working Directory* (Imprimir directorio de trabajo).
+* **Te muestra la ruta exacta de la carpeta donde estás ubicado ahora mismo.**
+
+### 2\. Mirar a tu alrededor (`ls`)
+
+Escribí `ls` y presioná Enter.
+
+* Significa: *List* (Listar).
+* **Muestra todos los archivos y carpetas que están adentro de tu carpeta actual.**
+* *Tip*: Si escribís `ls -a`, también te muestra los archivos ocultos (los que empiezan con un punto, como `.gitignore`).
+
+### 3\. Moverte de carpeta (`cd`)
+
+Significa: *Change Directory* (Cambiar de directorio).
+
+* Para entrar a una carpeta llamada `documentos`: `cd documentos`
+* Para volver a la carpeta anterior (subir un nivel): `cd ..`
+
+### 4\. Crear una carpeta nueva (`mkdir`)
+
+Significa: *Make Directory* (Crear directorio).
+
+* Para crear una carpeta llamada `mi_primer_carpeta`: `mkdir mi_primer_carpeta`
+
+### 5\. Crear un archivo vacío (`touch`)
+
+* Para crear un archivo llamado `notas.txt`: `touch notas.txt`
+
+### 6\. Escribir texto en un archivo (`echo`)
+
+* Para escribir "Hola Mundo" adentro de `notas.txt`: `echo "Hola Mundo" &gt; notas.txt`
+
+### 7\. Leer un archivo en la pantalla (`cat`)
+
+Significa: *Concatenate* (Ver contenido).
+
+* Para ver qué hay adentro de `notas.txt`: `cat notas.txt`
+
+### 8\. Borrar archivos y carpetas (`rm`)
+
+* Para borrar un archivo: `rm notas.txt`
+* Para borrar una carpeta vacía: `rmdir mi_primer_carpeta`
 
 ---
 
-### 🔄 El Flujo de Trabajo Fundamental en Git
+## 🌿 Lección 0.2: ¿Qué es Git y para qué sirve?
 
-1. `git status`: Muestra el estado de tu repositorio (archivos modificados, nuevos o no rastreados).
-2. `git add .`: Agrega los cambios al área de preparación (*Staging Area*).
-3. `git commit -m "mensaje explicativo"`: Guarda una versión inmutable de los cambios preparados con un mensaje descriptivo.
-4. `git push origin main`: Sube tus commits locales al repositorio remoto en GitHub.
-5. `git pull origin main`: Descarga y combina los últimos cambios de GitHub en tu máquina local.
+Imaginá que estás jugando a un videojuego largo y difícil. Antes de enfrentarte a un jefe final, **guardás la partida**. Si morís o te equivocás, podés volver al punto donde guardaste sin perder todo tu progreso.
 
----
+**Git hace exactamente eso con tu código:**
 
-## 📺 4\. Recurso Recomendado (Inmersión Pasiva)
-
-Para reforzar este módulo de forma visual y dinámica, te recomiendo ver el curso completo de MoureDev:
-
-* 🎥 [Curso de Git y GitHub desde Cero - MoureDev](https://www.google.com/url?sa=E&amp;q=https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3D3GymExBkKjE)
+* Te permite guardar "fotos" (puntos de control) de tu proyecto.
+* Si rompes algo, podés volver al estado anterior con un comando.
+* **GitHub** es como la nube (PlayStation Network / Drive) donde subís esos puntos de control guardados para compartirlos o no perderlos si se te rompe la computadora.
 
 ---
 
-## 🛠️ 5\. Práctica Guiada: Tu Primer Ejercicio de Terminal y Git
+## 🔄 Lección 0.3: El Flujo de Git en 4 Pasos Sencillos
 
-Realizá la siguiente secuencia de pasos en tu consola para verificar tu dominio de las herramientas:
+Cada vez que haces un cambio en tu código y querés guardarlo en GitHub, seguís estos 4 pasos en orden:
 
-1. Abrí la terminal y posicionate en la carpeta raíz de este proyecto.
-2. Navegá hasta la carpeta del Módulo 00: `cd modulo-00-entorno-y-git`
-3. Creá un archivo llamado `practica.txt`: `touch practica.txt`
-4. Escribí tu nombre dentro del archivo usando la consola: `echo "Hola, soy [Tu Nombre] y estoy aprendiendo Data Engineering" &gt; practica.txt`
-5. Verificá que el contenido se guardó correctamente: `cat practica.txt`
-6. Guardá los cambios en Git y súbelos a GitHub: `git add practica.txt` `git commit -m "docs: agregar archivo de practica del Modulo 00"` `git push origin main`
+```
+[ Tu Computadora ]  ---&gt;  [ Área de Preparación ]  ---&gt;  [ Historial Local ]  ---&gt;  [ GitHub ]
+    (Cambios)               (git add .)               (git commit)             (git push)
+
+```
+
+1. **git status**: Revisa qué archivos cambiaste o creaste.
+2. **git add .**: Prepara todos los archivos modificados para guardarlos (los mete en la "caja de envío").
+3. **git commit -m "Explicación del cambio"**: Le saca una foto a la caja de envío y le pone una etiqueta descriptiva (ej: `git commit -m "crear primer archivo"`).
+4. **git push origin main**: Sube esa foto guardada a tu repositorio remoto en GitHub.
 
 ---
 
-## 💡 Buenas Prácticas de Commit
+## 🏋️‍♂️ Práctica Guiada
 
-* Escribí mensajes de commit claros y en presente (ej: `feat: agregar script de ingesta`, `fix: corregir error de conexion`).
-* Nunca subas archivos pesados (más de 100MB), claves privadas o credenciales. Usá siempre el archivo `.gitignore`.
+Hagamos un ejercicio real en tu consola para fijar todo:
+
+1. Abrí la terminal y navigate hasta este módulo: `cd modulo-00-entorno-y-git`
+2. Verificá qué archivos hay en la carpeta: `ls`
+3. Creá un archivo llamado `mi_presentacion.txt`: `touch mi_presentacion.txt`
+4. Escribí tu nombre adentro usando el comando `echo`: `echo "Hola, soy [Tu Nombre] y estoy aprendiendo Data Engineering desde CERO" &gt; mi_presentacion.txt`
+5. Leé el archivo para asegurarte de que se guardó bien: `cat mi_presentacion.txt`
+6. Subí el archivo a tu GitHub ejecutando los 3 comandos sagrados: `git add mi_presentacion.txt` `git commit -m "docs: agregar mi presentacion"` `git push origin main`
+
+---
+
+## 📺 Recurso Recomendado
+
+* 🎥 [Curso de Git y GitHub desde Cero - MoureDev](https://www.google.com/url?sa=E&amp;q=https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3D3GymExBkKjE) (Miralo a tu ritmo para ver la explicación en video).
