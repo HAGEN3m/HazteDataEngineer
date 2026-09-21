@@ -53,7 +53,15 @@ GitHub es una plataforma en la nube que aloja repositorios de Git remotos, permi
 
 ---
 
-## 🛠️ 4\. Práctica Guiada: Tu Primer Ejercicio de Terminal y Git
+## 📺 4\. Recurso Recomendado (Inmersión Pasiva)
+
+Para reforzar este módulo de forma visual y dinámica, te recomiendo ver el curso completo de MoureDev:
+
+* 🎥 [Curso de Git y GitHub desde Cero - MoureDev](https://www.google.com/url?sa=E&amp;q=https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3D3GymExBkKjE)
+
+---
+
+## 🛠️ 5\. Práctica Guiada: Tu Primer Ejercicio de Terminal y Git
 
 Realizá la siguiente secuencia de pasos en tu consola para verificar tu dominio de las herramientas:
 
