@@ -1,72 +1,95 @@
-# 🐍 Lección 03: Control de Flujo con Condicionales (`if`, `elif`, `else`)
+# 🐍 Lección 04: Colecciones de Datos con Listas (`list`)
 
-Hasta ahora nuestros scripts ejecutaban las instrucciones de arriba a abajo en una sola línea recta. En esta lección aprenderemos a **tomar decisiones**: ejecutar ciertos bloques de código solo cuando se cumpla una condición específica (fundamental para validar si un dato es correcto antes de procesarlo).
+Hasta ahora guardábamos un solo valor por variable (por ejemplo, `edad = 25`). En la **Ingeniería de Datos**, casi siempre trabajamos con colecciones de múltiples valores juntos: filas de una tabla, registros de transacciones o rutas de archivos a procesar.
 
----
-
-## 1\. Operadores de Comparación
-
-Para evaluar condiciones usamos operadores que comparan dos valores y siempre devuelven un valor booleano (`True` o `False`):
-
-| Operador | Significado       | Ejemplo      | Resultado |
-| -------- | ----------------- | ------------ | --------- |
-| `==`     | Igual a           | `10 == 10`   | `True`    |
-| `!=`     | Distinto de       | `"A" != "B"` | `True`    |
-| `&gt;`      | Mayor que         | `15 &gt; 20`    | `False`   |
-| `&lt;`      | Menor que         | `5 &lt; 10`     | `True`    |
-| `&gt;=`     | Mayor o igual que | `10 &gt;= 10`   | `True`    |
-| `&lt;=`     | Menor o igual que | `8 &lt;= 3`     | `False`   |
+Una **Lista** es una estructura de datos que permite guardar **múltiples elementos en orden** dentro de una misma variable, encerrados entre **corchetes** **[]** y separados por comas.
 
 ---
 
-## 2\. Operadores Lógicos (`and`, `or`, `not`)
-
-Nos permiten combinar múltiples condiciones en una sola expresión:
-
-* **and**: Devuelve `True` **solo si ambas condiciones son verdaderas**.
-* **or**: Devuelve `True` **si al menos una de las condiciones es verdadera**.
-* **not**: Invierte el valor (transforma `True` en `False` y viceversa).
+## 1\. Crear una Lista
 
 ```
-monto = 1500
-estado = "COMPLETADA"
+# Lista de textos (strings)
+paises = ["Argentina", "Chile", "Uruguay"]
 
-# Ambas condiciones deben cumplirse
-es_valido = (monto &gt; 0) and (estado == "COMPLETADA") # True
+# Lista de números
+montos_usd = [1500.50, 2300.00, 4500.25, 1200.00]
+
+# Lista vacía (muy común para ir llenándola después)
+archivos_procesados = []
 
 ```
 
 ---
 
-## 3\. La Estructura `if`, `elif` y `else`
+## 2\. Acceder a Elementos por Índice
 
-En Python, la **sangría / indentación** (4 espacios hacia la derecha) es obligatoria: le indica a Python qué líneas están "adentro" de cada condición.
+Cada elemento dentro de una lista ocupa una **posición numerada (índice)** que comienza **siempre desde el número 0**:
 
 ```
-monto_transaccion = -50.0
+clientes = ["Juan", "María", "Pedro", "Ana"]
 
-if monto_transaccion &gt; 0:
-    print("🟢 Transacción válida. Registrando pago...")
-elif monto_transaccion == 0:
-    print("🟡 Advertencia: El monto registrado es $0.00.")
-else:
-    print("🔴 ERROR: El monto no puede ser negativo. Registro descartado.")
+# Posiciones:    0        1        2       3
+
+print(clientes[0]) # "Juan"  (El primer elemento)
+print(clientes[2]) # "Pedro" (El tercer elemento)
+
+```
+
+### Índices Negativos (Contar desde el final)
+
+Podés usar números negativos para acceder de atrás hacia adelante sin necesidad de saber el largo de la lista:
+
+```
+print(clientes[-1]) # "Ana"   (El último elemento)
+print(clientes[-2]) # "Pedro" (El anteúltimo elemento)
 
 ```
 
 ---
 
-## 🏋️‍♂️ Práctica de la Lección 03
+## 3\. Modificar y Trabajar con Listas
 
-1. Creá el archivo `ej_03_condicionales.py` dentro de la carpeta `practica/`.
-2. Escribí un script de **validación de ingesta de datos**:
-  * Definí la variable `cliente_activo = True` (booleano).
-  * Definí la variable `monto_compra = 2500.0` (float).
-  * Definí la variable `codigo_pais = "AR"` (string).
-  * **Reglas de Negocio a evaluar**:
-    * Si el cliente NO está activo (`cliente_activo == False`), imprimir: `"🔴 Cliente inactivado. Transacción rechazada."`
-    * Si el cliente está activo, pero el monto es menor o igual a 0, imprimir: `"🔴 Monto inválido."`
-    * Si el cliente está activo y el monto es mayor a 0:
-      * Si el `codigo_pais` es `"AR"` o `"CL"`, aplicar un recargo del 10% e imprimir el total a cobrar usando una f-string.
-      * Si es de cualquier otro país, no aplicar recargo e imprimir el total sin cambios.
-3. Ejecutá tu script en la terminal: `python3 practica/ej_03_condicionales.py`
+### Saber la cantidad de elementos (`len()`)
+
+La función `len()` devuelve la cantidad total de elementos dentro de la lista:
+
+```
+total_clientes = len(clientes) # 4
+
+```
+
+### Agregar un elemento al final (`.append()`)
+
+```
+clientes.append("Lucas")
+print(clientes) # ["Juan", "María", "Pedro", "Ana", "Lucas"]
+
+```
+
+### Modificar un elemento existente
+
+```
+clientes[1] = "María Laura" # Reemplaza el elemento en el índice 1
+
+```
+
+### Eliminar un elemento (`.remove()` o `del`)
+
+```
+clientes.remove("Pedro") # Busca y elimina el valor "Pedro"
+
+```
+
+---
+
+## 🏋️‍♂️ Práctica de la Lección 04
+
+1. Creá el archivo `ej_04_listas.py` dentro de la carpeta `practica/`.
+2. Escribí un script que simule una **cola de archivos pendientes de ingesta**:
+  * Definí una lista llamada `archivos_pendientes` con tres elementos: `"ventas_jan.csv"`, `"ventas_feb.csv"`, `"ventas_mar.csv"`.
+  * Imprimí en la consola cuántos archivos hay cargados usando `len()` y una f-string: `"Archivos pendientes en cola: 3"`
+  * Agregá un nuevo archivo al final de la lista usando `.append()`: `"ventas_apr.csv"`.
+  * Corregí el nombre del primer archivo (`"ventas_jan.csv"`) reemplazándolo en el índice `0` por `"ventas_jan_corregido.csv"`.
+  * Muestra en pantalla cuál es el primer archivo a procesar y cuál es el último de la cola usando índices (`[0]` y `[-1]`).
+3. Ejecutá tu script en la terminal: `python3 practica/ej_04_listas.py`
