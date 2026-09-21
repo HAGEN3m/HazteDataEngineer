@@ -114,8 +114,8 @@ Cada módulo práctico incluye ejercicios con **autoevaluación automática**:
 
 Creado por **Tomás Martín Herlein**
 
-* **LinkedIn**: [Tu Perfil de LinkedIn](#)
-* **GitHub**: [Tu Usuario de GitHub](#)
+* **LinkedIn**: [Tomás Herlein](#)
+* **GitHub**: [HAGEN3m](#)
 
 ---
 
