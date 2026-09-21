@@ -1,52 +1,48 @@
-🐘 Lección 12: Cierre del Módulo 02 — Proyecto Integrador de SQL (Refactorización y Optimización 100x)¡Llegamos al hito final del Módulo 02: SQL de Alto Rendimiento!A lo largo de este módulo hemos dominado las tripas de los motores relacionales:Lección 01: Orden de ejecución lógico (FROM $\rightarrow$ WHERE $\rightarrow$ GROUP BY $\rightarrow$ HAVING $\rightarrow$ SELECT).Lección 02: Algoritmos internos de JOIN (Nested Loop, Hash Join, Merge Join).Lección 03: Diagnóstico con EXPLAIN (ANALYZE, BUFFERS) y corrección de Disk Spilling ajustando work_mem.Lección 04: Indexación avanzada (B-Tree, GIN, BRIN, índices parciales y compuestos).Lección 05: Particionamiento físico de tablas (RANGE, LIST, HASH) y Partition Pruning.Lección 06: Motores columnares OLAP (DuckDB) vs. Row-Based (PostgreSQL) y cómputo vectorizado.Lección 07: Funciones de Ventana de Ranking (ROW_NUMBER, RANK, DENSE_RANK, NTILE).Lección 08: Funciones de Ventana de Desplazamiento (LAG, LEAD) y marcos dinámicos (ROWS BETWEEN).Lección 09: Modularización de pipelines con CTEs encadenadas y CTEs recursivas (WITH RECURSIVE).Lección 10: Patrones analíticos avanzadas (generate_series, Gaps & Islands, Análisis de Cohortes).Lección 11: SQL defensivo, manejo de NULLs, prevención de división por cero e idempotencia (ON CONFLICT).En esta lección integraremos todas estas técnicas en un Proyecto Capstone de Refactorización SQL, transformando un script legacy ineficiente que colapsa la base de datos en un pipeline limpio, defensivo y hasta 100 veces más rápido.1. El Escenario de ProducciónImaginemos que heredamos una consulta de reporte analítico sobre un Data Warehouse en PostgreSQL con más de 10,000,000 de filas. El reporte actual tarda 18 minutos en ejecutarse, consume el 100% de la CPU del servidor y provoca desbordamientos a disco (Disk Spilling).🔴 El Script Ineficiente Legacy (Anti-Patrón):-- ❌ SCRIPT LEGACY: Tarda 18 minutos y colapsa la memoria RAM
-SELECT 
-    v.cliente_id,
-    c.nombre,
-    c.pais,
-    COUNT(DISTINCT v.transaccion_id) AS total_compras,
-    SUM(v.monto) AS total_gastado,
-    SUM(v.monto) / COUNT(v.transaccion_id) AS ticket_promedio -- Riesgo de división por cero
-FROM fact_ventas v, dim_clientes c  -- Implicit Join antiguo (Cartesiano ineficiente)
-WHERE v.cliente_id = c.cliente_id
-  AND DATE(v.fecha_transaccion) >= '2026-01-01' -- Invalida el uso de índices B-Tree
-  AND c.cliente_id NOT IN (                      -- Riesgo de subconsulta con NULLs
-      SELECT cliente_id FROM clientes_bloqueados
-  )
-GROUP BY v.cliente_id, c.nombre, c.pais
-HAVING c.pais IN ('ARGENTINA', 'CHILE', 'URUGUAY') -- Filtra grupos DESPUÉS de agrupar todo
-ORDER BY total_gastado DESC;
-2. Diagnóstico del Plan de Ejecución (EXPLAIN ANALYZE)Al ejecutar EXPLAIN (ANALYZE, BUFFERS) sobre la consulta legacy, identificamos los siguientes cuellos de botella:Seq Scan on fact_ventas: La función DATE(v.fecha_transaccion) impide usar el índice B-Tree de la columna fecha_transaccion.Filter: NOT IN (Subplan 1): La subconsulta con NOT IN realiza un escaneo secuencial repetido por cada fila.Sort Method: external merge Disk: 48500kB: La agregación y ordenamiento superan los 4MB de work_mem, provocando Disk Spilling.Falta de Poda Temprana: El filtro por país está en la cláusula HAVING, obligando al motor a procesar clientes de todos los países del mundo antes de descartarlos.3. Estrategia de Refactorización y OptimizaciónAplicaremos un plan de refactorización en 5 pasos:Predicados Sargables: Reemplazar DATE(fecha) >= '2026-01-01' por un rango continuo fecha >= '2026-01-01 00:00:00' para habilitar el uso de índices B-Tree o BRIN.Poda Temprana: Mover los filtros por país y fecha a la cláusula WHERE para reducir la masa de datos antes del GROUP BY.Reemplazar NOT IN por NOT EXISTS: Evitar el colapso por NULLs y habilitar un Anti-Join por Hash eficiente.Estructura Modular con CTEs: Separar la agregación de ventas de los metadatos de clientes para evitar un JOIN masivo antes de agrupar.SQL Defensivo: Aplicar NULLIF y COALESCE en el cálculo del ticket promedio para prevenir errores de división por cero.🟢 4. El Script Refactorizado y Optimizado (Producción Ssr)-- 🟢 SCRIPT REFACTORIZADO: Se ejecuta en 1.2 segundos (Aceleración ~900x)
-WITH clientes_validos AS (
-    -- 1. Poda temprana: Filtramos clientes activos por país usando NOT EXISTS
-    SELECT cliente_id, nombre, pais
-    FROM dim_clientes c
-    WHERE pais IN ('ARGENTINA', 'CHILE', 'URUGUAY')
-      AND NOT EXISTS (
-          SELECT 1 FROM clientes_bloqueados b 
-          WHERE b.cliente_id = c.cliente_id
-      )
-),
-ventas_agregadas AS (
-    -- 2. Agregación vectorizada sobre tabla de hechos con predicado sargable
-    SELECT 
-        v.cliente_id,
-        COUNT(v.transaccion_id) AS total_compras,
-        SUM(v.monto) AS total_gastado
-    FROM fact_ventas v
-    WHERE v.fecha_transaccion >= '2026-01-01 00:00:00'
-      AND v.fecha_transaccion <  '2027-01-01 00:00:00'
-    GROUP BY v.cliente_id
-)
--- 3. Cruce final limpio con SQL defensivo
-SELECT 
-    c.cliente_id,
-    c.nombre,
-    c.pais,
-    COALESCE(v.total_compras, 0) AS total_compras,
-    COALESCE(v.total_gastado, 0.0) AS total_gastado,
-    -- Prevención de división por cero
-    COALESCE(v.total_gastado / NULLIF(v.total_compras, 0), 0.0) AS ticket_promedio
-FROM clientes_validos c
-INNER JOIN ventas_agregadas v ON c.cliente_id = v.cliente_id
-ORDER BY total_gastado DESC;
-📊 Tabla Comparativa de ResultadosMétricaScript Legacy (Antes)Script Refactorizado (Después)Tiempo Total de Ejecución18 minutos (1,080 s)1.2 segundos 🚀I/O de Disco (Buffers Read)85,000 bloques (Disco)320 bloques (RAM Cache)Estrategia de LecturaSeq Scan completo en facturasIndex Scan / BRIN ScanUso de Memoria / Disk SpillingExternal Merge Disk (48 MB)Quicksort Memory (1.2 MB)Robustez ante ErroresFalla con división por 0 o NULL100% Defensivo con COALESCE/NULLIF🏋️‍♂️ Práctica del Proyecto Integrador (Lección 12)Ubicate en la carpeta practica/modulo_02/ de tu repositorio local.Creá el archivo ej_12_proyecto_integrador.sql.Replicá el script refactorizado sobre tu base de datos de pruebas (PostgreSQL, DuckDB o SQLite).Agregá comentarios al final del archivo detallando:Punto A: Explicá qué beneficio de I/O de disco aportó reemplazar DATE(fecha) >= '2026-01-01' por un rango continuo.Punto B: Explicá por qué realizar la agregación GROUP BY en la CTE ventas_agregadas antes del JOIN con la tabla de clientes es más rápido que hacer el JOIN primero y agrupar al final.
+🐘 Lección 02: Algoritmos Internos de JOIN a Bajo Nivel (Nested Loop, Hash Join, Merge Join) y Complejidad $O(N)$En el procesamiento de datos analíticos, las operaciones de cruce (JOINs) representan la mayor carga computacional en memoria y CPU. Cuando escribís FROM ventas v JOIN clientes c ON v.cliente_id = c.id, el motor de la base de datos no aplica una receta mágica única: el Optimizador de Consultas analiza el tamaño de las tablas, los índices disponibles y la memoria RAM reservada (work_mem en PostgreSQL) para seleccionar uno de los tres algoritmos físicos de cruce.Como Data Engineer Ssr, conocer estos tres algoritmos a bajo nivel te permite entender por qué una consulta tarda 2 milisegundos o se cuelga durante 20 minutos, y cómo ajustar tus índices o estructuras para forzar el algoritmo óptimo.1. Nested Loop Join (Bucle Anidado)Es el algoritmo más intuitivo y equivale a un bucle for anidado en Python.¿Cómo funciona?Toma una tabla como externa (Outer Table / Driving Table).Para cada fila de la tabla externa, escanea la tabla interna (Inner Table) buscando coincidencias.FOR cada fila R1 en Tabla_Externa (M filas):
+    FOR cada fila R2 en Tabla_Interna (N filas):
+        IF R1.clave == R2.clave:
+            EMITIR_FILA(R1, R2)
+Complejidad Computacional y Rendimiento:Sin Índice: Complejidad $\mathcal{O}(M \times N)$. Si tenés 10,000 filas en ambas tablas, realizará 100,000,000 comparaciones.Con Índice B-Tree en la Tabla Interna: Complejidad $\mathcal{O}(M \log N)$. Para cada fila de la tabla externa, realiza una búsqueda logarítmica ultra rápida en el índice de la tabla interna.¿Cuándo lo elige el motor?Una de las tablas es muy pequeña (ej. menos de 100 filas) y la otra tabla tiene un índice B-Tree en la clave del JOIN.Consumo de Memoria: Mínimo $\mathcal{O}(1)$.2. Hash Join (Unión por Hash)Es el caballo de batalla del procesamiento de datos en Data Warehouses (OLAP) y consultas analíticas masivas.¿Cómo funciona? Consta de 2 fases estrictas:Fase 1: Construcción (Build Phase)
+El motor lee la tabla más pequeña (Build Input), aplica una función hash sobre la clave del JOIN y construye una Tabla Hash en memoria RAM (work_mem).Fase 2: Sondeo (Probe Phase)
+El motor lee la tabla más grande (Probe Input) fila por fila, calcula el valor hash de la clave y busca instantáneamente en tiempo constante $\mathcal{O}(1)$ si existe coincidencia en la Tabla Hash.FASE BUILD (En RAM):
+    FOR cada fila R1 en Tabla_Pequenia:
+        hash_bucket = HASH(R1.clave)
+        INSERTAR_EN_HASH_TABLE(hash_bucket, R1)
+
+FASE PROBE:
+    FOR cada fila R2 en Tabla_Grande:
+        hash_bucket = HASH(R2.clave)
+        IF BUSCAR_EN_HASH_TABLE(hash_bucket):
+            EMITIR_FILA(R1, R2)
+Complejidad Computacional y Riesgos:Complejidad temporal: $\mathcal{O}(M + N)$ (Lineal).Consumo de Memoria: $\mathcal{O}(M)$ (Requiere cargar toda la tabla pequeña en RAM).🚨 Riesgo de Disk Spilling: Si la Tabla Hash supera el límite de memoria asignado (work_mem), PostgreSQL divide la tabla hash en lotes y los escribe en disco (Batches / Spill to Disk), lo que degrada drásticamente el rendimiento por la latencia de I/O de disco.3. Merge Join (Unión por Mezcla)Es el algoritmo más eficiente cuando los datos ya se encuentran previamente ordenados por la clave del JOIN.¿Cómo funciona?Requiere que ambas tablas estén ordenadas por la clave de cruce.Mantiene dos punteros paralelos y avanza sobre ambas tablas en una sola pasada, de menor a mayor.p1 = inicio(Tabla_A_Ordenada)
+p2 = inicio(Tabla_B_Ordenada)
+
+WHILE p1 != fin AND p2 != fin:
+    IF p1.clave == p2.clave:
+        EMITIR_FILA(p1, p2)
+        AVANZAR(p1)
+    ELSE IF p1.clave < p2.clave:
+        AVANZAR(p1)
+    ELSE:
+        AVANZAR(p2)
+Complejidad Computacional y Rendimiento:Si los datos YA están ordenados (por índice B-Tree o ORDER BY previo): Complejidad $\mathcal{O}(M + N)$. Es el JOIN más rápido posible.Si NO están ordenados (Sort Merge Join): Debe ordenar ambas tablas primero, resultando en $\mathcal{O}(M \log M + N \log N)$.Consumo de Memoria: Muy bajo.📊 Matriz Comparativa de Algoritmos de JOINCriterioNested Loop JoinHash JoinMerge JoinRequisito de OrdenNingunoNingunoObligatorio por clave de JOINUso de Memoria RAMCasi nulo $\mathcal{O}(1)$Alto (Satura si falta work_mem)BajoComplejidad Temporal$\mathcal{O}(M \times N)$ o $\mathcal{O}(M \log N)$$\mathcal{O}(M + N)$$\mathcal{O}(M + N)$ (si está ordenado)Caso de Uso IdealFiltros OLTP que traen pocos registros con índiceTablas grandes no ordenadas en OLAP / DWTablas masivas con índices B-Tree o ya ordenadas🏋️‍♂️ Práctica de la Lección 02Ubicate en la carpeta practica/modulo_02/ de tu repositorio local.Creá el archivo ej_02_join_algorithms.sql.Escribí un script SQL (compatible con PostgreSQL) que simule la creación de dos tablas de prueba y evalúe la estrategia de JOIN:-- 1. Crear tabla de Dimension Clientes (pequeña)
+CREATE TABLE dim_clientes (
+    cliente_id INT PRIMARY KEY,
+    nombre VARCHAR(50),
+    pais VARCHAR(10)
+);
+
+-- 2. Crear tabla de Hechos Ventas (grande)
+CREATE TABLE fact_ventas (
+    transaccion_id BIGINT,
+    cliente_id INT,
+    monto DECIMAL(10,2),
+    fecha DATE
+);
+
+-- 3. Consulta de Cruce Analítico
+SELECT c.pais, SUM(v.monto) AS total_pais
+FROM fact_ventas v
+JOIN dim_clientes c ON v.cliente_id = c.cliente_id
+GROUP BY c.pais;
+Agregá comentarios explicativos en el archivo SQL respondiendo:Pregunta A: Si dim_clientes tiene 1,000 filas y fact_ventas tiene 10,000,000 de filas sin índices en v.cliente_id, ¿cuál de los 3 algoritmos seleccionará PostgreSQL por defecto y por qué?Pregunta B: ¿Qué ocurriría si dim_clientes crece a 5,000,000 de filas y la RAM asignada (work_mem) es de solo 4 MB? ¿Qué efecto de degradación de rendimiento (Disk Spilling) se producirá?
