@@ -1,109 +1,100 @@
-# 🐍 Módulo 01 — Lección 0.1: Tu Primera Línea de Código (`print` y Comentarios)
-
-&gt; *El comienzo de todo programador: enseñarle a la computadora a comunicarse con vos a través de la pantalla.*
-
----
-
-## 📌 1\. ¿Qué es `print()`?
-
-Cuando programamos, la computadora ejecuta instrucciones en silencio. La función **print()** (imprimir) es la herramienta básica que usamos para pedirle a Python que nos muestre un mensaje en la terminal.
-
-Pensalo como el "parlante" de tu código: **todo lo que pones adentro de los paréntesis de** **print()** **, Python lo muestra en pantalla.**
-
-### Ejemplo:
-
 ```
-print("¡Hola, mundo!")
+import json
 
-```
+# Estructura del Notebook Interactivo (Nivel 0.1)
+notebook_content = {
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "# 🐍 Módulo 01 - Lección 0.1: Tu Primera Línea de Código (`print` y Comentarios)\n",
+        "\n",
+        "&gt; **Bienvenido/a a tu primer Notebook Interactivo.**\n",
+        "&gt; Vas a aprender ejecutando celdas de código directamente en VS Code.\n",
+        "\n",
+        "---\n",
+        "\n",
+        "### 📌 1. ¿Qué es `print()`?\n",
+        "La función `print()` le pide a Python que muestre un mensaje en pantalla.\n",
+        "Ejecutá la celda de abajo haciendo clic en el botón **Play (▶)** o presionando `Shift + Enter`."
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": None,
+      "metadata": {},
+      "outputs": [],
+      "source": [
+        "# Ejemplo 1: Ejecutá esta celda\n",
+        "print('¡Hola! Bienvenido a Data Engineering desde CERO.')"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "---\n",
+        "### 🧪 Ejercicio 1.1: Tu Primer Mensaje\n",
+        "**Consigna:** Completa la variable `mensaje` con tu nombre y la frase `'listo para programar'`.\n",
+        "Ejemplo: `\"Soy Tomas y estoy listo para programar\"`."
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": None,
+      "metadata": {},
+      "outputs": [],
+      "source": [
+        "# TODO: Escribí tu mensaje entre las comillas\n",
+        "mensaje = \"\" \n",
+        "print(mensaje)"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### 🟢 Evaluador Automático del Ejercicio 1.1\n",
+        "Ejecutá esta celda para verificar si tu respuesta es correcta."
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": None,
+      "metadata": {},
+      "outputs": [],
+      "source": [
+        "# Celda de Autoevaluación\n",
+        "try:\n",
+        "    assert len(mensaje) &gt; 0, \"❌ La variable 'mensaje' no puede estar vacía.\"\n",
+        "    assert \"listo para programar\" in mensaje.lower(), \"❌ El mensaje debe contener la frase 'listo para programar'.\"\n",
+        "    print(\"🟢 ¡EXCELENTE! Ejercicio 1.1 Aprobado.\")\n",
+        "except AssertionError as error:\n",
+        "    print(error)\n",
+        "except NameError:\n",
+        "    print(\"❌ Primero tenés que ejecutar la celda de arriba donde definís 'mensaje'.\")"
+      ]
+    }
+  ],
+  "metadata": {
+    "language_info": { "name": "python" }
+  },
+  "nbformat": 4,
+  "nbformat_minor": 2
+}
 
-Si ejecutás esa línea, la consola va a responder:
+# Guardar en la carpeta del Módulo 01
+ruta_destino = "modulo-01-python-defensivo/01_nivel_0_1_hola_mundo.ipynb"
+with open(ruta_destino, "w", encoding="utf-8") as f:
+    json.dump(notebook_content, f, indent=2, ensure_ascii=False)
 
-```
-¡Hola, mundo!
-
-```
-
----
-
-## 🔤 2\. El Texto en Python (Cadenas de Texto / *Strings*)
-
-Fijate que el mensaje `"¡Hola, mundo!"` está rodeado de **comillas dobles** (`" "`).
-
-En programación, al texto plano se lo llama **String** (cadena de caracteres). Las comillas le avisan a Python: *"Ey, esto no es una instrucción ni un comando, es simplemente texto literal que quiero que conserves tal cual"*.
-
-Podés usar comillas dobles (`" "`) o comillas simples (`' '`), pero **siempre tenés que abrir y cerrar con el mismo tipo**:
-
-* ✅ `print("Hola")` \-&gt; Correcto
-* ✅ `print('Hola')` \-&gt; Correcto
-* ❌ `print("Hola')` \-&gt; **Error**: mezclaste comillas dobles con simples.
-
----
-
-## 📝 3\. Los Comentarios (`#`)
-
-Un **comentario** es una anotación en español (o inglés) que escribimos dentro del archivo de código para explicarnos a nosotros mismos o a otros compañeros qué hace una línea.
-
-Python **ignora por completo** todo lo que esté después del símbolo de numeral/hashtag (`#`).
-
-### Ejemplo:
-
-```
-# Este es un comentario: Python no lo ejecuta
-print("Esta línea sí se ejecuta en la pantalla") # Este comentario está al final de la línea
-
-```
-
-Los comentarios son fundamentales para mantener un código ordenado y legible.
-
----
-
-## 🛠️ Práctica Guiada (Paso a Paso)
-
-Vamos a crear y ejecutar tu primer script de Python en tu computadora:
-
-1. Abrí la terminal en la raíz de tu proyecto.
-2. Navegá hasta la carpeta del Módulo 01:
-
-```
-cd modulo-01-python-defensivo
-
-```
-
-1. Creá la carpeta `src` (si no existe) y el archivo `01_hola_mundo.py`:
-
-```
-mkdir -p src
-touch src/01_hola_mundo.py
-
-```
-
-1. Abrí el archivo `src/01_hola_mundo.py` en VS Code y escribí estas líneas:
-
-```
-# Mi primer script de Python en Data Engineering
-print("¡Hola! Estoy dando mis primeros pasos en Python.")
-print("Aprendiendo desde CERO absoluto.")
-
-```
-
-1. Guardá el archivo (`Ctrl + S`).
-2. Ejecutalo desde tu terminal con el comando:
-
-```
-python3 src/01_hola_mundo.py
+print(f"✅ Notebook generado con éxito en: {ruta_destino}")
 
 ```
 
-*(Si estás en Windows y* *python3* *no funciona, probá escribiendo solo* *python src/01\_hola\_mundo.py* *)*.
-
----
-
-### 💡 ¿Qué tendría que pasar en tu terminal?
-
-Deberías ver estas dos líneas impresas limpia y directamente en la consola:
+1. Guardá el archivo y ejecutalo en la terminal:
 
 ```
-¡Hola! Estoy dando mis primeros pasos en Python.
-Aprendiendo desde CERO absoluto.
+python3 generar_notebook.py
 ```
