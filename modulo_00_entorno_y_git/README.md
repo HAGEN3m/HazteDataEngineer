@@ -115,3 +115,27 @@ Hagamos un ejercicio real en tu consola para fijar todo:
 ## 📺 Recurso Recomendado
 
 * 🎥 [Curso de Git y GitHub desde Cero - MoureDev](https://www.google.com/url?sa=E&amp;q=https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3D3GymExBkKjE) (Miralo a tu ritmo para ver la explicación en video).
+
+```
+## ⚡ Lección 0.4: Scripting Defensivo en Bash y Monitoreo de Procesos
+
+Cuando creamos scripts en la terminal para mover o procesar datos, necesitamos que fallen de forma segura si ocurre un error.
+
+### 1. Las 3 reglas de oro del Scripting Defensivo (`set -euo pipefail`)
+Agregá siempre esta línea al inicio de tus scripts `.sh`:
+
+```bash
+#!/usr/bin/env bash
+set -euo pipefail
+
+```
+
+* **set -e**: Detiene la ejecución del script inmediatamente si cualquier comando da error.
+* **set -u**: Da error si intentás usar una variable que no fue definida.
+* **set -o pipefail**: Si usás tuberías (`comando1 | comando2`), el script falla si *cualquiera* de los comandos falla, no solo el último.
+
+### 2\. Monitoreo de memoria y procesos en tiempo real
+
+* **top** **/** **htop**: Muestra los procesos que más CPU y RAM están consumiendo.
+* **lsof -i :8080**: Te dice qué proceso está usando un puerto específico.
+* **kill -9
