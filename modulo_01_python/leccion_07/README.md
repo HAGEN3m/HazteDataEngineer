@@ -59,8 +59,8 @@ En producción se usan constantemente para comparar listas de datos (ej: saber q
 clientes_ayer = {"C-10", "C-20", "C-30"}
 clientes_hoy = {"C-20", "C-30", "C-40"}
 
-# 1. Intersección (&amp;): Elementos presentes en AMBOS conjuntos
-clientes_reincidentes = clientes_ayer &amp; clientes_hoy # {"C-20", "C-30"}
+# 1. Intersección (&): Elementos presentes en AMBOS conjuntos
+clientes_reincidentes = clientes_ayer & clientes_hoy # {"C-20", "C-30"}
 
 # 2. Diferencia (-): Elementos que están en el primero pero NO en el segundo
 clientes_nuevos = clientes_hoy - clientes_ayer # {"C-40"}
@@ -74,7 +74,7 @@ total_clientes = clientes_ayer | clientes_hoy # {"C-10", "C-20", "C-30", "C-40"}
 
 ## 🏋️‍♂️ Práctica de la Lección 07
 
-1. Creá el archivo `ej_07_tuplas_sets.py` dentro de la carpeta `practica/`.
+1. Creá el archivo `ej_07_tuplas_sets.py` dentro de la carpeta `leccion_07/`.
 2. Escribí un script para **depurar e inspeccionar un lote de transacciones**:
   * Definí una tupla inmutable llamada `CONFIG_ESQUEMA` con los nombres de las columnas obligatorias: `("id_transaccion", "cliente_id", "monto", "fecha")`.
   * Definí una lista con IDs de clientes que llegaron en un reporte de eventos sucios: `ids_reporte = ["C-01", "C-02", "C-01", "C-03", "C-02", "C-04", "C-01"]`
@@ -84,4 +84,4 @@ total_clientes = clientes_ayer | clientes_hoy # {"C-10", "C-20", "C-30", "C-40"}
     * Cantidad original de registros vs. cantidad de registros únicos.
     * Cuáles clientes del reporte son completamente **nuevos** (están en `ids_unicos` pero NO en `ids_base_datos`).
     * Cuáles clientes están presentes en **ambas fuentes** (intersección).
-3. Ejecutá tu script en la terminal: `python3 practica/ej_07_tuplas_sets.py`
+3. Ejecutá tu script en la terminal: `python3 leccion_07/ej_07_tuplas_sets.py`

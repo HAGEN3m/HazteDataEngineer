@@ -32,7 +32,7 @@ es_estudiante = True
 
 ## 🏋️‍♂️ Práctica de la Lección 01
 
-1. Creá un archivo llamado `ej_01_variables.py` dentro de la carpeta `practica/`.
+1. Creá un archivo llamado `ej_01_variables.py` dentro de la carpeta `leccion_01/`.
 2. Definí tres variables:
   * `nombre_profesion`: con el texto `"Ingeniero de Datos"`.
   * `horas_estudio_semanal`: con el número entero `10`.

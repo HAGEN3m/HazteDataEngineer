@@ -77,7 +77,7 @@ with open("ventas.csv", mode="r", encoding="utf-8") as f:
 
 ## 🏋️‍♂️ Práctica de la Lección 10
 
-1. Creá el archivo `ej_10_archivos.py` dentro de la carpeta `practica/`.
+1. Creá el archivo `ej_10_archivos.py` dentro de la carpeta `leccion_10/`.
 2. Escribí un script que realice un ciclo completo de **generación, lectura y filtrado de un log de auditoría**:
   * Definí una lista de diccionarios con eventos del pipeline:
 
@@ -94,4 +94,4 @@ eventos_raw = [
 2. Leé el archivo `log_ejecucion.csv` recién creado usando `csv.DictReader`.
 3. Filtrá los eventos: si el `nivel` es `"ERROR"` o `"WARNING"`, escribí ese mensaje en un archivo de texto llamado `alertas.txt` usando `with open(..., "a")`.
 4. Verificá que `alertas.txt` contenga únicamente los eventos críticos formateados.
-5. Ejecutá tu script en la terminal: `python3 practica/ej_10_archivos.py`
+5. Ejecutá tu script en la terminal: `python3 leccion_10/ej_10_archivos.py`

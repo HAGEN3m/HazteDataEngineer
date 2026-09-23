@@ -77,7 +77,7 @@ print(normalizar_texto("  ventas_2026.csv  ", convertir_mayusculas=True)) # "VEN
 
 ## 🏋️‍♂️ Práctica de la Lección 08
 
-1. Creá el archivo `ej_08_funciones.py` dentro de la carpeta `practica/`.
+1. Creá el archivo `ej_08_funciones.py` dentro de la carpeta `leccion_08/`.
 2. Escribí un script para **limpiar y validar registros de montos**:
   * Definí una función llamada `validar_y_convertir_monto(monto_raw, tasa_cambio=1.0)`:
     * El parámetro `monto_raw` puede recibir un número (`int`/`float`) o un texto (ej: `"1500.50"`).
@@ -88,4 +88,4 @@ print(normalizar_texto("  ventas_2026.csv  ", convertir_mayusculas=True)) # "VEN
   * Para cada elemento, llamá a la función pasando una `tasa_cambio=1200.0`.
   * Si el resultado devuelto no es `None`, imprimí: `"🟢 Monto convertido a moneda local: $..."`
   * Si es `None`, imprimí: `"🔴 Registro inválido descartado."`
-3. Ejecutá tu script en la terminal: `python3 practica/ej_08_funciones.py`
+3. Ejecutá tu script en la terminal: `python3 leccion_08/ej_08_funciones.py`

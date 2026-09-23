@@ -62,7 +62,7 @@ print(f"El precio final es: ${total}") # Salida: El precio final es: $1300
 
 ## 🏋️‍♂️ Práctica de la Lección 02
 
-1. Creá el archivo `ej_02_operaciones.py` dentro de la carpeta `practica/`.
+1. Creá el archivo `ej_02_operaciones.py` dentro de la carpeta `leccion_02/`.
 2. Escribí un script que simule el cálculo del sueldo neto de un desarrollador:
   * Definí la variable `sueldo_bruto_str = "3500.50"` (como string).
   * Definí la variable `porcentaje_impuesto = 15` (como número entero).

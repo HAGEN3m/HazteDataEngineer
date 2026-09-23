@@ -12,10 +12,10 @@ Para evaluar condiciones usamos operadores que comparan dos valores y siempre de
 | -------- | ----------------- | ------------ | --------- |
 | `==`     | Igual a           | `10 == 10`   | `True`    |
 | `!=`     | Distinto de       | `"A" != "B"` | `True`    |
-| `&gt;`      | Mayor que         | `15 &gt; 20`    | `False`   |
-| `&lt;`      | Menor que         | `5 &lt; 10`     | `True`    |
-| `&gt;=`     | Mayor o igual que | `10 &gt;= 10`   | `True`    |
-| `&lt;=`     | Menor o igual que | `8 &lt;= 3`     | `False`   |
+| `>`      | Mayor que         | `15 > 20`    | `False`   |
+| `<`      | Menor que         | `5 < 10`     | `True`    |
+| `>=`     | Mayor o igual que | `10 >= 10`   | `True`    |
+| `<=`     | Menor o igual que | `8 <= 3`     | `False`   |
 
 ---
 
@@ -32,7 +32,7 @@ monto = 1500
 estado = "COMPLETADA"
 
 # Ambas condiciones deben cumplirse
-es_valido = (monto &gt; 0) and (estado == "COMPLETADA") # True
+es_valido = (monto > 0) and (estado == "COMPLETADA") # True
 
 ```
 
@@ -45,7 +45,7 @@ En Python, la **sangría / indentación** (4 espacios hacia la derecha) es oblig
 ```
 monto_transaccion = -50.0
 
-if monto_transaccion &gt; 0:
+if monto_transaccion > 0:
     print("🟢 Transacción válida. Registrando pago...")
 elif monto_transaccion == 0:
     print("🟡 Advertencia: El monto registrado es $0.00.")
@@ -58,7 +58,7 @@ else:
 
 ## 🏋️‍♂️ Práctica de la Lección 03
 
-1. Creá el archivo `ej_03_condicionales.py` dentro de la carpeta `practica/`.
+1. Creá el archivo `ej_03_condicionales.py` dentro de la carpeta `leccion_03/`.
 2. Escribí un script de **validación de ingesta de datos**:
   * Definí la variable `cliente_activo = True` (booleano).
   * Definí la variable `monto_compra = 2500.0` (float).
@@ -69,4 +69,4 @@ else:
     * Si el cliente está activo y el monto es mayor a 0:
       * Si el `codigo_pais` es `"AR"` o `"CL"`, aplicar un recargo del 10% e imprimir el total a cobrar usando una f-string.
       * Si es de cualquier otro país, no aplicar recargo e imprimir el total sin cambios.
-3. Ejecutá tu script en la terminal: `python3 practica/ej_03_condicionales.py`
+3. Ejecutá tu script en la terminal: `python3 leccion_03/ej_03_condicionales.py`

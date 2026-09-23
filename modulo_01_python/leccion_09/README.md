@@ -82,7 +82,7 @@ finally:
 
 ## 🏋️‍♂️ Práctica de la Lección 09
 
-1. Creá el archivo `ej_09_excepciones.py` dentro de la carpeta `practica/`.
+1. Creá el archivo `ej_09_excepciones.py` dentro de la carpeta `leccion_09/`.
 2. Escribí un script para **procesar defensivamente una lista de registros sucios**:
   * Definí una lista de registros mixtos: `registros_raw = ["100.5", "200.0", "INVALIDO", "0.0", None, "500.25"]`
   * Definí una función llamada `procesar_registro(valor_str)` que intente:
@@ -96,4 +96,4 @@ finally:
     5. Si sale bien, debe retornar el resultado de la división redondeado a 2 decimales.
   * Recorré la lista `registros_raw` con un bucle `for`, ejecutá la función para cada elemento y acumulá los resultados válidos en una variable `suma_total`.
   * Al finalizar el bucle, imprimí la suma total acumulada.
-3. Ejecutá tu script desde la terminal: `python3 practica/ej_09_excepciones.py`
+3. Ejecutá tu script desde la terminal: `python3 leccion_09/ej_09_excepciones.py`

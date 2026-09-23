@@ -11,8 +11,8 @@ En esta lección aprenderemos a usar **Type Hinting** (pistas de tipo) para espe
 Python es un lenguaje de tipado dinámico, lo que significa que no exige declarar el tipo de variable. Sin embargo, desde Python 3.5 podemos agregar **pistas de tipo** explícitas usando dos puntos `:` en los parámetros y `-&gt;` para el valor de retorno.
 
 ```
-# Sintaxis básica: variable: tipo -&gt; tipo_retorno
-def calcular_iva(monto: float, porcentaje: int = 21) -&gt; float:
+# Sintaxis básica: variable: tipo -> tipo_retorno
+def calcular_iva(monto: float, porcentaje: int = 21) -> float:
     return monto * (porcentaje / 100)
 
 ```
@@ -33,7 +33,7 @@ from typing import List, Dict, Optional, Union
 
 # List[float]: Una lista que contiene floats
 # Optional[float]: Puede ser float o None
-def procesar_lote_montos(registros: List[Dict[str, Union[int, float]]]) -&gt; Optional[float]:
+def procesar_lote_montos(registros: List[Dict[str, Union[int, float]]]) -> Optional[float]:
     if not registros:
         return None
     
@@ -57,7 +57,7 @@ def transformar_registro_cliente(
     cliente_id: str, 
     monto_usd: float, 
     es_vip: bool = False
-) -&gt; Dict[str, Union[str, float]]:
+) -> Dict[str, Union[str, float]]:
     """Transforma y aplica descuentos a un registro de cliente.
 
     Args:
@@ -71,7 +71,7 @@ def transformar_registro_cliente(
     Raises:
         ValueError: Si monto_usd es menor o igual a cero.
     """
-    if monto_usd &lt;= 0:
+    if monto_usd >= 0:
         raise ValueError("El monto debe ser estrictamente positivo.")
 
     monto_final = monto_usd * 0.85 if es_vip else monto_usd
@@ -87,7 +87,7 @@ def transformar_registro_cliente(
 
 ## 🏋️‍♂️ Práctica de la Lección 12
 
-1. Creá el archivo `ej_12_type_hinting_docstrings.py` dentro de la carpeta `practica/`.
+1. Creá el archivo `ej_12_type_hinting_docstrings.py` dentro de la carpeta `leccion_12/`.
 2. Escribí una función modular para **filtrar y calcular métricas de ingesta**:
   * Nombre de la función: `filtrar_y_promediar_ventas`.
   * **Parámetros con Type Hints**:
@@ -111,4 +111,4 @@ dataset_test = [
 
 ```
 
-1. Ejecutá tu script desde la terminal: `python3 practica/ej_12_type_hinting_docstrings.py`
+1. Ejecutá tu script desde la terminal: `python3 leccion_12/ej_12_type_hinting_docstrings.py`

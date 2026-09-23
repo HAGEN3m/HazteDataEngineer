@@ -85,11 +85,11 @@ clientes.remove("Pedro") # Busca y elimina el valor "Pedro"
 
 ## 🏋️‍♂️ Práctica de la Lección 04
 
-1. Creá el archivo `ej_04_listas.py` dentro de la carpeta `practica/`.
+1. Creá el archivo `ej_04_listas.py` dentro de la carpeta `leccion_04/`.
 2. Escribí un script que simule una **cola de archivos pendientes de ingesta**:
   * Definí una lista llamada `archivos_pendientes` con tres elementos: `"ventas_jan.csv"`, `"ventas_feb.csv"`, `"ventas_mar.csv"`.
   * Imprimí en la consola cuántos archivos hay cargados usando `len()` y una f-string: `"Archivos pendientes en cola: 3"`
   * Agregá un nuevo archivo al final de la lista usando `.append()`: `"ventas_apr.csv"`.
   * Corregí el nombre del primer archivo (`"ventas_jan.csv"`) reemplazándolo en el índice `0` por `"ventas_jan_corregido.csv"`.
   * Muestra en pantalla cuál es el primer archivo a procesar y cuál es el último de la cola usando índices (`[0]` y `[-1]`).
-3. Ejecutá tu script en la terminal: `python3 practica/ej_04_listas.py`
+3. Ejecutá tu script en la terminal: `python3 leccion_04/ej_04_listas.py`

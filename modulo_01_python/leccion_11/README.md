@@ -97,7 +97,7 @@ print(construir_query_sql("fact_ventas", estado="COMPLETADA", pais="AR"))
 
 ## 🏋️‍♂️ Práctica de la Lección 11
 
-1. Creá el archivo `ej_11_funciones_avanzadas.py` dentro de la carpeta `practica/`.
+1. Creá el archivo `ej_11_funciones_avanzadas.py` dentro de la carpeta `leccion_11/`.
 2. Escribí un script para **analizar y auditar lotes de datos flexibles**:
   * Definí la función `auditar_pipeline(nombre_pipeline, *registros, **metadata)`:
     * El parámetro `nombre_pipeline` recibe el nombre del proceso (string).
@@ -112,4 +112,4 @@ print(construir_query_sql("fact_ventas", estado="COMPLETADA", pais="AR"))
     * Registros: `150.50, 300.00, 450.25, 100.00`
     * Metadata: `entorno="PROD"`, `ejecutado_por="airflow"`
   * Imprimí el resultado desempaquetando el retorno doble y verificá cómo se construyen el resumen y la metadata.
-3. Ejecutá tu script en la terminal: `python3 practica/ej_11_funciones_avanzadas.py`
+3. Ejecutá tu script en la terminal: `python3 leccion_11/ej_11_funciones_avanzadas.py`

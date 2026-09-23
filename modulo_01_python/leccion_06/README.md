@@ -66,7 +66,7 @@ Para iterar sobre las claves y los valores al mismo tiempo dentro de un bucle `f
 
 ```
 for clave, valor in transaccion.items():
-    print(f"Campo: {clave} -&gt; Valor: {valor}")
+    print(f"Campo: {clave} -> Valor: {valor}")
 
 ```
 
@@ -93,7 +93,7 @@ for venta in ventas:
 
 ## 🏋️‍♂️ Práctica de la Lección 06
 
-1. Creá el archivo `ej_06_diccionarios.py` dentro de la carpeta `practica/`.
+1. Creá el archivo `ej_06_diccionarios.py` dentro de la carpeta `leccion_06/`.
 2. Escribí un script que procese la configuración de conexión a una base de datos:
   * Definí el diccionario `config_db`:
 
@@ -111,4 +111,4 @@ config_db = {
 2. Intentá leer la clave `"password"` usando `.get()` pasando como valor por defecto `"SIN_PASSWORD"`.
 3. Recorré el diccionario con un bucle `for` y `.items()`, imprimiendo en pantalla cada parámetro formateado: `"Parámetro: host | Valor: localhost"` `"Parámetro: puerto | Valor: 5432"` ... etc.
 4. Usá un condicional `if` para verificar si el puerto es `5432`. Si lo es, imprimí: `"⚡ Conexión configurada para PostgreSQL en puerto estándar."`
-5. Ejecutá tu script desde la terminal: `python3 practica/ej_06_diccionarios.py`
+5. Ejecutá tu script desde la terminal: `python3 leccion_06/ej_06_diccionarios.py`

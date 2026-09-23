@@ -50,7 +50,7 @@ El bucle `while` se ejecuta **mientras una condición booleana sea verdadera (**
 intentos = 0
 max_intentos = 3
 
-while intentos &lt; max_intentos:
+while intentos < max_intentos:
     intentos += 1
     print(f"📡 Conectando a la base de datos... (Intento {intentos})")
 
@@ -74,7 +74,7 @@ for monto in registros:
     if monto is None:
         print("⚠️ Registro nulo detectado. Salteando...")
         continue # Saltea el None y sigue con el próximo
-    if monto &lt; 0:
+    if monto < 0:
         print(f"🔴 Error crítico: Monto negativo ({monto}). Deteniendo proceso.")
         break # Detiene el bucle por completo
     print(f"🟢 Monto procesado: ${monto}")
@@ -85,12 +85,12 @@ for monto in registros:
 
 ## 🏋️‍♂️ Práctica de la Lección 05
 
-1. Creá el archivo `ej_05_bucles.py` dentro de la carpeta `practica/`.
+1. Creá el archivo `ej_05_bucles.py` dentro de la carpeta `leccion_05/`.
 2. Escribí un script que simule el **procesamiento y acumulación de un lote de transacciones**:
   * Definí una lista de montos: `transacciones = [150.0, 200.5, -20.0, 310.0, 0.0, 500.0]`.
   * Definí dos variables acumuladoras en `0`: `monto_total_valido = 0.0` y `cantidad_invalidas = 0`.
   * Usá un bucle `for` para recorrer la lista de transacciones:
     * Si el monto es menor o igual a `0`, incrementá `cantidad_invalidas` en `1`, mostrá un aviso con `print()` y usá `continue` para no sumarlo.
     * Si el monto es positivo, sumalo a `monto_total_valido` e imprimí un mensaje confirmando el procesamiento del monto.
-  * Al finalizar el bucle, mostrá un resumen en pantalla usando un f-string: `"Procesamiento finalizado | Total acumulado: $960.5 | Transacciones descartadas: 2"`
-3. Ejecutá tu script en la terminal: `python3 practica/ej_05_bucles.py`
+  * Al finalizar el bucle, mostrá un resumen en pantalla usando un f-string: `"Procesamiento finalizado | Total acumulado: $1160.50 | Transacciones descartadas: 2"`
+3. Ejecutá tu script en la terminal: `python3 leccion_05/ej_05_bucles.py`
