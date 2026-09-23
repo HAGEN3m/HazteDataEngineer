@@ -1,4 +1,3 @@
-```
 # 🐚 Módulo 00: La Terminal, Git y Entorno Local de Trabajo
 
 &gt; Perdele el miedo a la pantalla negra: aprendé a moverte por tu computadora usando comandos, a guardar el historial de tu código con Git y a configurar un entorno de desarrollo profesional defensivo.
