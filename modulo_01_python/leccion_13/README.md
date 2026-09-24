@@ -78,7 +78,7 @@ Si el archivo `src/formateador.py` tiene la función:
 
 ```
 # src/formateador.py
-def limpiar_texto(texto: str) -&gt; str:
+def limpiar_texto(texto: str) -> str:
     return texto.strip().lower()
 
 ```
@@ -116,15 +116,17 @@ if __name__ == "__main__":
 
 ## 🏋️‍♂️ Práctica de la Lección 13
 
-1. Creá el archivo `transformaciones.py` dentro de la carpeta `practica/`:
-  * Definí una función `limpiar_monto_str(monto_raw: str) -&gt; float` que:
+1. Creá el archivo `transformaciones.py` dentro de la carpeta `leccion_13/`:
+  * Definí una función `limpiar_monto_str(monto_raw: str) -> float` que:
     * Elimine los símbolos `$` y comas `,`.
     * Convierta el texto resultante a `float`.
     * Si ocurre un error, capture el `ValueError` y devuelva `0.0`.
-2. Creá el archivo `ej_13_modulos.py` dentro de la carpeta `practica/`:
+2. Creá el archivo `ej_13_modulos.py` dentro de la carpeta `leccion_13/`:
   * Importá la función `limpiar_monto_str` desde `transformaciones.py` usando `from transformaciones import limpiar_monto_str`.
   * Importá también el módulo nativo `datetime` con `from datetime import datetime`.
   * Dentro de un bloque `if __name__ == "__main__":`:
     * Procesá la lista de datos sucios: `["$1,500.50", "$200.00", "INVALIDO", "$3,450.75"]`.
     * Imprimí cada monto convertido junto con la fecha y hora actual formateada (`datetime.now().strftime("%Y-%m-%d %H:%M:%S")`).
-3. Ejecutá tu script desde la terminal: `python3 practica/ej_13_modulos.py`
+3. Ejecutá tu script desde la terminal: `python3 leccion_13/ej_13_modulos.py`
+
+---
